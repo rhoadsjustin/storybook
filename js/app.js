@@ -43,7 +43,7 @@ $('#shelf').addEventListener('click', (e) => {
 
 $('#startBtn').addEventListener('click', () => {
   audio.unlock(); audio.sfx('pop');
-  answers = { pro: 'they' }; stepIdx = 0;
+  answers = { pro: 'he' }; stepIdx = 0;
   show('wizard'); renderStep();
 });
 $('#surpriseBtn').addEventListener('click', () => { audio.unlock(); create(randomAnswers()); });
@@ -56,7 +56,7 @@ const STEPS = [
   { key: 'name', q: 'What is your hero’s name?' },
   { key: 'setting', q: 'Where does the story happen?', pic: (k) => buildScene({ setting: k, time: 'day', seed: 11 }) },
   { key: 'friend', q: 'Who comes along?', pic: (k) => icon(friendArt(k)) },
-  { key: 'item', q: 'What magic thing do they carry?', pic: (k) => icon(itemArt(k)) },
+  { key: 'item', q: 'What magic thing does your hero carry?', pic: (k) => icon(itemArt(k)) },
   { key: 'quest', q: 'What is the story about?', pic: (k) => emoji({ treasure: '💎', friend: '🤝', rescue: '🏡', brave: '🌌' }[k]) },
   { key: 'mood', q: 'What kind of story today?', pic: (k) => emoji({ bedtime: '🌙', adventure: '🎉' }[k]) },
 ];
@@ -76,12 +76,12 @@ function renderStep() {
   let body;
   if (step.key === 'name') {
     const chips = NAMES.slice(0, 6).map((n) => `<button class="chip" data-name="${n}">${n}</button>`).join('');
-    const pros = [['he', 'he'], ['she', 'she'], ['they', 'they']]
+    const pros = [['he', 'he'], ['she', 'she']]
       .map(([k, l]) => `<button class="chip pro ${answers.pro === k ? 'on' : ''}" data-pro="${k}">${l}</button>`).join('');
     body = `<div class="name-step">
       <input id="nameInput" type="text" maxlength="14" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Type a name" value="${esc(answers.name || '')}">
       <div class="chips">${chips}</div>
-      <div class="chips"><span class="label">Call them</span>${pros}</div>
+      <div class="chips"><span class="label">Your hero is a</span>${pros}</div>
       <button class="btn primary" id="nameNext">Next ›</button>
     </div>`;
   } else {
@@ -245,7 +245,7 @@ $('#reader').addEventListener('pointerup', (e) => {
 // Tap the words to hear them again; tap the buttons on the last page.
 textEl.addEventListener('click', (e) => {
   if (e.target.closest('#againBtn')) { audio.sfx('pop'); pageIdx = 0; renderPage(); narrate(); return; }
-  if (e.target.closest('#newBtn')) { audio.sfx('pop'); answers = { pro: 'they' }; stepIdx = 0; show('wizard'); renderStep(); return; }
+  if (e.target.closest('#newBtn')) { audio.sfx('pop'); answers = { pro: 'he' }; stepIdx = 0; show('wizard'); renderStep(); return; }
   if (!voiceOn) return;
   narrate();
 });

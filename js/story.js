@@ -19,7 +19,6 @@ const ITEM = { lantern: 'glowing lantern', brush: 'magic paintbrush', shell: 'si
 const PRONOUNS = {
   he: { he: 'he', He: 'He', him: 'him', his: 'his', himself: 'himself', was: 'was' },
   she: { he: 'she', He: 'She', him: 'her', his: 'her', himself: 'herself', was: 'was' },
-  they: { he: 'they', He: 'They', him: 'them', his: 'their', himself: 'themself', was: 'were' },
 };
 
 const WORLD = {
@@ -111,7 +110,7 @@ export function randomAnswers(seed = Date.now()) {
   const r = rng(seed);
   const pick = (o) => { const k = Array.isArray(o) ? o : Object.keys(o); return k[Math.floor(r() * k.length)]; };
   return {
-    hero: pick(OPTIONS.hero), name: pick(NAMES), pro: pick(['he', 'she', 'they']), setting: pick(OPTIONS.setting),
+    hero: pick(OPTIONS.hero), name: pick(NAMES), pro: pick(['he', 'she']), setting: pick(OPTIONS.setting),
     friend: pick(OPTIONS.friend), item: pick(OPTIONS.item), quest: pick(OPTIONS.quest), mood: pick(OPTIONS.mood),
   };
 }
@@ -125,7 +124,7 @@ export function makeStory(a, seed) {
   const paths = [...w.paths].sort(() => r() - 0.5);
 
   const v = {
-    ...PRONOUNS[a.pro] || PRONOUNS.they, N, F, kind: KIND[a.hero], fk: FRIEND[a.friend], item: ITEM[a.item],
+    ...PRONOUNS[a.pro] || PRONOUNS.he, N, F, kind: KIND[a.hero], fk: FRIEND[a.friend], item: ITEM[a.item],
     place: w.place, home: w.home, sound: w.sound, obstacle: w.obstacle, Obstacle: cap(w.obstacle), obsThe: w.obsThe, ObsThe: cap(w.obsThe),
     treasure: w.treasure, critter: w.critter, Critter: cap(w.critter), lights: w.lights, lightsDesc: w.lightsDesc, night: w.night,
     adj: pick(['curious', 'cheerful', 'gentle', 'clever', 'giggly']), path1: paths[0], path2: paths[1],
