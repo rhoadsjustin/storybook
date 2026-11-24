@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>Twinkle Tales</title>
+  <meta name="description" content="Answer a few questions and get your own animated storybook, with pictures, music and narration.">
+  <meta name="theme-color" content="#1c1f4a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Twinkle Tales">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main id="app" data-screen="home">
+
+    <!-- Home -->
+    <section id="home" class="screen book">
+      <div class="page art" id="homeArt"></div>
+      <div class="page panel home-panel">
+        <h1 class="logo">Twinkle <br>Tales</h1>
+        <p class="tagline">Answer a few questions and a brand-new storybook appears.</p>
+        <button class="btn primary" id="startBtn">✨ Make a story</button>
+        <button class="btn" id="surpriseBtn">🎲 Surprise me</button>
+        <div class="shelf-wrap" id="shelfWrap" hidden>
+          <h2>Your bookshelf</h2>
+          <div class="shelf" id="shelf"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Questions -->
+    <section id="wizard" class="screen book">
+      <div class="page art" id="wizArt"></div>
+      <div class="page panel" id="wizBody"></div>
+    </section>
+
+    <!-- Storybook -->
+    <section id="reader" class="screen book">
+      <div class="page art" id="art"></div>
+      <div class="page panel text">
+        <div class="story-text" id="storyText" aria-live="polite"></div>
+        <nav class="pager">
+          <button class="round" id="prevBtn" aria-label="Previous page">‹</button>
+          <div class="dots" id="dots"></div>
+          <button class="round go" id="nextBtn" aria-label="Next page">›</button>
+        </nav>
+      </div>
+      <div class="toolbar">
+        <button class="round" id="homeBtn" aria-label="Home">🏠</button>
+        <span class="spacer"></span>
+        <button class="round" id="voiceBtn" aria-label="Read aloud" aria-pressed="true">🗣️</button>
+        <button class="round" id="soundBtn" aria-label="Music and sounds" aria-pressed="true">🎵</button>
+      </div>
+    </section>
+
+    <div id="magic" hidden><div class="wand">✨</div><p>Writing your story…</p></div>
+  </main>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
