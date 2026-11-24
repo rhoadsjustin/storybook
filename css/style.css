@@ -197,7 +197,8 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; }
 
 /* ---------- picture animations ---------- */
 
-.scene * { transform-box: fill-box; transform-origin: center; }
+/* Not for elements positioned by a transform attribute: that would re-centre mirrored parts (the second eye, ear, arm) onto the first. */
+.scene *:not([transform]) { transform-box: fill-box; transform-origin: center; }
 .scene [data-tap] { cursor: pointer; }
 
 @keyframes twinkle { 50% { opacity: .2; transform: scale(.6); } }
