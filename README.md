@@ -18,8 +18,15 @@ No build step and no dependencies; it is a static site.
 python3 -m http.server 8000   # then open http://localhost:8000
 ```
 
-To put it on the phone, host the folder on any HTTPS static host (GitHub Pages works), open it in Safari and
-choose Share → Add to Home Screen. It then runs full screen and works offline.
+## Install on the phone
+
+The repo deploys itself to GitHub Pages on every push to `main` (`.github/workflows/pages.yml`).
+
+1. One-time: in the repo, go to Settings → Pages and set **Source** to **GitHub Actions**.
+2. Push to `main` (or run the "Deploy to GitHub Pages" workflow from the Actions tab).
+3. On the phone, open `https://rhoadsjustin.github.io/storybook/` in Safari and choose Share → Add to Home Screen.
+
+It then runs full screen and works offline.
 
 ## How it works
 
