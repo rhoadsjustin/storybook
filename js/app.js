@@ -1,6 +1,7 @@
 import { buildScene, heroIcon, icon, friendArt, itemArt } from './scenes.js';
 import { makeStory, randomAnswers, cleanName, OPTIONS, NAMES } from './story.js';
 import { audio } from './audio.js';
+import { nativityScene, xmasList, xmasStory, xmasHomeScene } from './nativity.js';
 
 const $ = (s) => document.querySelector(s);
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -19,6 +20,7 @@ function show(screen) {
   app.dataset.screen = screen;
   if (screen !== 'reader') audio.stopStory();
   if (screen === 'home') renderHome();
+  if (screen === 'xmas') renderXmas();
 }
 
 /* ---------- home ---------- */
@@ -47,6 +49,25 @@ $('#startBtn').addEventListener('click', () => {
   show('wizard'); renderStep();
 });
 $('#surpriseBtn').addEventListener('click', () => { audio.unlock(); create(randomAnswers()); });
+
+/* ---------- Christmas stories ---------- */
+
+const draw = (scene) => (scene.nativity ? nativityScene(scene) : buildScene(scene));
+
+function renderXmas() {
+  $('#xmasArt').innerHTML = nativityScene(xmasHomeScene);
+  $('#xmasList').innerHTML = xmasList
+    .map((s) => `<button class="option" data-story="${s.i}"><span class="pic">${nativityScene(s.cover)}</span><span>${s.title}</span></button>`)
+    .join('');
+}
+$('#xmasBtn').addEventListener('click', () => { audio.unlock(); audio.sfx('pop'); show('xmas'); });
+$('#xmasBack').addEventListener('click', () => { audio.sfx('pop'); show('home'); });
+$('#xmasList').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-story]');
+  if (!b) return;
+  audio.unlock(); audio.sfx('pop');
+  openStory(xmasStory(+b.dataset.story));
+});
 
 /* ---------- questions ---------- */
 
@@ -160,14 +181,14 @@ const textEl = $('#storyText');
 
 function renderPage() {
   const p = pages[pageIdx];
-  $('#art').innerHTML = buildScene(p.scene);
+  $('#art').innerHTML = draw(p.scene);
   audio.setDark(p.dark);
   const words = p.text.split(/\s+/).map((w) => `<span class="w">${esc(w)}</span>`).join(' ');
   textEl.className = 'story-text ' + (p.kind || '');
   if (p.kind === 'cover') {
-    textEl.innerHTML = `<p class="kicker">A Twinkle Tale</p><h1>${words}</h1><p class="hint">Tap › to begin</p>`;
+    textEl.innerHTML = `<p class="kicker">${story.xmas ? 'A Christmas Bible Story' : 'A Twinkle Tale'}</p><h1>${words}</h1><p class="hint">${story.ref ? esc(story.ref) + '<br>' : ''}Tap › to begin</p>`;
   } else if (p.kind === 'end') {
-    textEl.innerHTML = `<h1>${words}</h1><div class="end-actions"><button class="btn" id="againBtn">↺ Read again</button><button class="btn primary" id="newBtn">✨ New story</button></div>`;
+    textEl.innerHTML = `<h1>${words}</h1><div class="end-actions"><button class="btn" id="againBtn">↺ Read again</button><button class="btn primary" id="newBtn">${story.xmas ? '⭐ More stories' : '✨ New story'}</button></div>`;
   } else {
     textEl.innerHTML = `<p>${words}</p>`;
   }
@@ -245,13 +266,17 @@ $('#reader').addEventListener('pointerup', (e) => {
 // Tap the words to hear them again; tap the buttons on the last page.
 textEl.addEventListener('click', (e) => {
   if (e.target.closest('#againBtn')) { audio.sfx('pop'); pageIdx = 0; renderPage(); narrate(); return; }
+  if (e.target.closest('#newBtn') && story.xmas) { audio.sfx('pop'); show('xmas'); return; }
   if (e.target.closest('#newBtn')) { audio.sfx('pop'); answers = { pro: 'he' }; stepIdx = 0; show('wizard'); renderStep(); return; }
   if (!voiceOn) return;
   narrate();
 });
 
 // Everything in the pictures can be poked.
-const TAP_SFX = { hero: 'boing', friend: 'chirp', magic: 'sparkle', star: 'twinkle', fish: 'bloop', prop: 'pop' };
+const TAP_SFX = {
+  hero: 'boing', friend: 'chirp', magic: 'sparkle', star: 'twinkle', fish: 'bloop', prop: 'pop',
+  person: 'pop', angel: 'sparkle', sheep: 'baa', donkey: 'heehaw', camel: 'bloop', baby: 'lullaby',
+};
 app.addEventListener('click', (e) => {
   const t = e.target.closest?.('[data-tap]');
   if (!t) return;

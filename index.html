@@ -26,6 +26,7 @@
         <p class="tagline">Answer a few questions and a brand-new storybook appears.</p>
         <button class="btn primary" id="startBtn">✨ Make a story</button>
         <button class="btn" id="surpriseBtn">🎲 Surprise me</button>
+        <button class="btn xmas" id="xmasBtn">⭐ Christmas stories</button>
         <div class="shelf-wrap" id="shelfWrap" hidden>
           <h2>Your bookshelf</h2>
           <div class="shelf" id="shelf"></div>
@@ -37,6 +38,15 @@
     <section id="wizard" class="screen book">
       <div class="page art" id="wizArt"></div>
       <div class="page panel" id="wizBody"></div>
+    </section>
+
+    <!-- Christmas Bible stories -->
+    <section id="xmas" class="screen book">
+      <div class="page art" id="xmasArt"></div>
+      <div class="page panel">
+        <header class="wiz-head"><button class="round" id="xmasBack" aria-label="Back">‹</button><h2>The Christmas Story</h2></header>
+        <div class="options n4" id="xmasList"></div>
+      </div>
     </section>
 
     <!-- Storybook -->

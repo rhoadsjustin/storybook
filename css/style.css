@@ -23,12 +23,13 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; }
 .screen { position: absolute; inset: 0; display: none; }
 #app[data-screen="home"] #home,
 #app[data-screen="wizard"] #wizard,
+#app[data-screen="xmas"] #xmas,
 #app[data-screen="reader"] #reader { display: grid; }
 
 /* ---------- the book: one page folded, a two-page spread unfolded ---------- */
 
 .book { grid-template-rows: 42% minmax(0, 1fr); grid-template-columns: minmax(0, 1fr); perspective: 1800px; }
-#home.book, #wizard.book { grid-template-rows: 30% minmax(0, 1fr); }
+#home.book, #wizard.book, #xmas.book { grid-template-rows: 30% minmax(0, 1fr); }
 
 .page { position: relative; min-width: 0; min-height: 0; overflow: hidden; backface-visibility: hidden; }
 .page.art { background: #26306b; container-type: size; }
@@ -47,7 +48,7 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; }
 }
 
 @media (min-width: 600px) and (min-aspect-ratio: 11/10) {
-  .book, #home.book, #wizard.book { grid-template-rows: minmax(0, 1fr); grid-template-columns: 1fr 1fr; }
+  .book, #home.book, #wizard.book, #xmas.book { grid-template-rows: minmax(0, 1fr); grid-template-columns: 1fr 1fr; }
   .panel { padding: max(18px, var(--sat)) max(26px, var(--sar)) max(16px, var(--sab)) 30px; }
   /* the spine, right on the crease */
   .book::after {
@@ -59,7 +60,7 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; }
 }
 /* Where the browser reports two screen halves, size the pages to match them exactly. */
 @media (horizontal-viewport-segments: 2) {
-  .book, #home.book, #wizard.book {
+  .book, #home.book, #wizard.book, #xmas.book {
     grid-template-rows: minmax(0, 1fr);
     grid-template-columns: env(viewport-segment-width 0 0, 50%) env(viewport-segment-width 1 0, 50%);
     column-gap: calc(env(viewport-segment-left 1 0, 50%) - env(viewport-segment-right 0 0, 50%));
@@ -72,6 +73,8 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; }
   min-height: 52px; padding: 10px 22px; border-radius: 999px; font-size: 19px; font-weight: 800;
   background: #fff; box-shadow: 0 4px 0 #e2d3ad; transition: transform .1s;
 }
+.btn.xmas { background: #2f6b4f; color: #fff; box-shadow: 0 4px 0 #1f4a36; }
+#xmas .wiz-head h2 { flex: 1; margin: 0; text-align: center; font-size: clamp(19px, 5.6cqw, 26px); font-weight: 900; }
 .btn.primary { background: var(--coral); color: #fff; box-shadow: 0 4px 0 var(--coral-dark); }
 .btn:active, .round:active, .option:active, .chip:active, .book-card:active { transform: translateY(3px) scale(.98); }
 .round {
@@ -251,7 +254,10 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; }
 .pose-cheer .arm { animation: wave .55s ease-in-out infinite; transform-origin: center top; }
 .pose-sleep { animation: breathe 3.6s ease-in-out infinite; transform-origin: center bottom; }
 [data-tap].tapped { animation: tapWiggle .6s ease-in-out; transform-origin: center bottom; }
-[data-tap="hero"].tapped, [data-tap="friend"].tapped, [data-tap="fish"].tapped { animation-name: tapJump; }
+[data-tap="hero"].tapped, [data-tap="friend"].tapped, [data-tap="fish"].tapped,
+[data-tap="sheep"].tapped, [data-tap="donkey"].tapped, [data-tap="camel"].tapped { animation-name: tapJump; }
+@keyframes wing { from { transform: rotate(-7deg); } to { transform: rotate(9deg); } }
+.wing { animation: wing 1.4s ease-in-out infinite alternate; transform-origin: right center; }
 
 @media (prefers-reduced-motion: reduce) {
   .drift, .spin, .sway, .swim, .bubble, .snowfall, .shoot, .gust, .aurora, .floaty, .smoke, .pose-walk, .pose-cheer, .pose-cheer .arm, .flap { animation: none; }

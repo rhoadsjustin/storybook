@@ -4,6 +4,10 @@ An animated children's storybook. Answer seven quick questions (hero, name, plac
 what the story is about, bedtime or adventure) and the app writes a ten-page picture book with animated
 illustrations, music, sound effects and read-aloud narration.
 
+There is also a **Christmas stories** section: four illustrated retellings of the Nativity (the angel's
+visit to Mary, the birth in Bethlehem, the shepherds, and the wise men), each marked with its Bible
+reference and set to "Silent Night". Tap the star, the angels, the sheep, the donkey or the baby in the manger.
+
 Laid out for the iPhone Duo:
 
 | Unfolded: a two-page spread, spine on the crease | Folded: one page, picture over words |
@@ -36,6 +40,7 @@ Everything is generated on the device. There are no API keys, network calls or m
 | --- | --- |
 | `js/story.js` | Story engine: builds the title and page text from the answers, and describes each page's picture |
 | `js/scenes.js` | Draws every illustration as animated SVG (heroes, companions, four worlds, props) |
+| `js/nativity.js` | The Christmas Bible stories and their illustrations |
 | `js/audio.js` | Web Audio synth for music, ambience and effects; narration via the built-in speech voice |
 | `js/app.js` | Screens, questions, page turning, bookshelf (saved in `localStorage`) |
 | `css/style.css` | Layout for folded and unfolded, page-turn and picture animations |

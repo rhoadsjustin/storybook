@@ -2,9 +2,9 @@
 // Nothing user-typed is ever interpolated into these strings.
 
 let uid = 0;
-const INK = '#4a3838';
-const O = `stroke="${INK}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"`;
-const both = (s) => s + `<g transform="scale(-1 1)">${s}</g>`;
+export const INK = '#4a3838';
+export const O = `stroke="${INK}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"`;
+export const both = (s) => s + `<g transform="scale(-1 1)">${s}</g>`;
 
 export function rng(seed) {
   let s = seed >>> 0 || 1;
@@ -16,7 +16,7 @@ export function rng(seed) {
   };
 }
 
-function starPath(cx, cy, R, r, n = 5) {
+export function starPath(cx, cy, R, r, n = 5) {
   let d = '';
   for (let i = 0; i < n * 2; i++) {
     const a = (Math.PI * i) / n - Math.PI / 2;
@@ -171,9 +171,9 @@ const SKY = {
 };
 const TINT = { dusk: ['#ff7a3c', 0.14], dark: ['#0c1424', 0.42], night: ['#0b1040', 0.42] };
 
-const delay = (r, max) => `animation-delay:-${(r() * max).toFixed(2)}s`;
+export const delay = (r, max) => `animation-delay:-${(r() * max).toFixed(2)}s`;
 
-function stars(r, n, maxY = 250) {
+export function stars(r, n, maxY = 250) {
   let s = '';
   for (let i = 0; i < n; i++) s += `<circle class="twinkle" style="${delay(r, 4)}" cx="${(r() * 400).toFixed(0)}" cy="${(r() * maxY).toFixed(0)}" r="${(0.8 + r() * 1.6).toFixed(1)}" fill="#fff"/>`;
   return s;
@@ -319,7 +319,7 @@ function lightsArt(setting, r) {
   return s;
 }
 
-function sparkles(r, cx, cy, spread, n = 12) {
+export function sparkles(r, cx, cy, spread, n = 12) {
   const cols = ['#fff', '#ffe066', '#ffd1e8', '#bdf4ff'];
   let s = '';
   for (let i = 0; i < n; i++) {
@@ -339,7 +339,7 @@ function confetti(r) {
 
 /* ---------- scene composer ---------- */
 
-const tapWrap = (x, y, sc, tap, inner, flip = false) =>
+export const tapWrap = (x, y, sc, tap, inner, flip = false) =>
   `<g transform="translate(${x} ${y}) scale(${flip ? -sc : sc} ${sc})"><g data-tap="${tap}">${inner}</g></g>`;
 
 /**
